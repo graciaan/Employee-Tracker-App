@@ -38,14 +38,14 @@ function promptCreator() {
     } else if (`${data.employeeTracker}` === "Update An Employee Role") {
       return updateEmployee();
     } else {
-      //need to put something here to end the prompt
+      // db.end();
     }
   })
 }
 
-function viewDepartments() {
+// function viewDepartments() {
   
-}
+// }
 
 
 promptCreator();
