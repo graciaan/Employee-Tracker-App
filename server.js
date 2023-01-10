@@ -75,10 +75,8 @@ function addDepartment() {
     ]
   )
   .then(function(data) {
-    db.query(`INSERT INTO department(name) VALUES(?)`, data.addDepartment, (err, result)=> {
-      err ? console.error(err) : console.table(result);
-      promptCreator();
-    });
+    db.query(`INSERT INTO department(name) VALUES(?)`, data.addDepartment) 
+    promptCreator();
   });
 };
 
@@ -104,10 +102,8 @@ function addRole() {
     ]
   )
   .then(function(data) {
-    db.query(`INSERT INTO role(title, salary, department_id) VALUES (?,?,?)`, [data.addRole, data.roleSalary, data.roleDept], (err, result)=> {
-      err ? console.error(err) : console.table(result);
-      promptCreator();
-    });
+    db.query(`INSERT INTO role(title, salary, department_id) VALUES (?,?,?)`, [data.addRole, data.roleSalary, data.roleDept])
+    promptCreator();
   });
 };
 
@@ -136,10 +132,8 @@ function addEmployee() {
     ]
   )
   .then(function(data) {
-    db.query(`INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`, [data.employeeFirstName, data.employeeLastName, data.roleID, data.managerID], (err, result)=> {
-      err ? console.error(err) : console.table(result);
-      promptCreator();
-    });
+    db.query(`INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`, [data.employeeFirstName, data.employeeLastName, data.roleID, data.managerID])
+    promptCreator();
   });
 };
 promptCreator();
