@@ -33,7 +33,7 @@ function promptCreator() {
       return addDepartment();
     } else if (`${data.employeeTracker}` === "Add A Role") {
       return addRole();
-    } else if (`${data.employeeTracker}` === "Add an Employee") {
+    } else if (`${data.employeeTracker}` === "Add An Employee") {
       return addEmployee();
     } else if (`${data.employeeTracker}` === "Update An Employee Role") {
       return updateEmployee();
@@ -141,5 +141,5 @@ function addEmployee() {
       promptCreator();
     });
   });
-}
+};
 promptCreator();
