@@ -23,6 +23,6 @@ VALUES ("Andrew", "Gracia", 1, 1),
       ("John", "Doe", 1, 2),
       ("Conor", "Oberst", 2, 3),
       ("Phil", "Elverum", 3, 2),
-      ("Noah", "Lennox", 4, 4)
+      ("Noah", "Lennox", 4, 4);
 
 SELECT * FROM employee;
