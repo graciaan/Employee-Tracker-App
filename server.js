@@ -11,13 +11,13 @@ const db = mysql.createConnection(
   }
 );
 
-function promptCreator() {
+function promptCreator(){
   inquirer.prompt(
     [
       {
         name: "employeeTracker",
         message: "Hello and welcome to the Employee Tracker Database, please make a selection from the following choices: ",
-        choices: ["View All Departments", "View All Roles", "View All Employees", "Add A Department", "Add A Role", "Add An Employee", "Update An Employee Role", "Finished"],
+        choices: ["View All Departments", "View All Roles", "View All Employees", "Add A Department", "Add A Role", "Add An Employee", "Finished"],
         type: "list"
       }
     ]
@@ -35,8 +35,6 @@ function promptCreator() {
       return addRole();
     } else if (`${data.employeeTracker}` === "Add An Employee") {
       return addEmployee();
-    } else if (`${data.employeeTracker}` === "Update An Employee Role") {
-      return updateEmployee();
     } else {
       db.end();
     };
@@ -58,7 +56,7 @@ function viewRoles() {
 };
 
 function viewEmployees() {
-  db.query(`SELECT * FROM employee`, (err, results) => {
+  db.query(`SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT (manager.first_name, " ", manager.last_name) AS manager FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON employee.manager_id = manager.id`, (err, results) => {
     err ? console.error(err) : console.table(results);
     promptCreator();
   });
