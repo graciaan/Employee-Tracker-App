@@ -17,7 +17,7 @@ function promptCreator(){
       {
         name: "employeeTracker",
         message: "Hello and welcome to the Employee Tracker Database, please make a selection from the following choices: ",
-        choices: ["View All Departments", "View All Roles", "View All Employees", "Add A Department", "Add A Role", "Add An Employee", "Finished"],
+        choices: ["View All Departments", "View All Roles", "View All Employees", "Add A Department", "Add A Role", "Add An Employee", "Update An Employee", "Finished"],
         type: "list"
       }
     ]
@@ -35,6 +35,8 @@ function promptCreator(){
       return addRole();
     } else if (`${data.employeeTracker}` === "Add An Employee") {
       return addEmployee();
+    } else if (`${data.employeeTracker}` === "Update An Employee") {
+      return updateEmployee(); 
     } else {
       db.end();
     };
@@ -134,4 +136,48 @@ function addEmployee() {
     promptCreator();
   });
 };
+
+function updateEmployee() {
+  db.query(`SELECT * FROM employee`, (err, results) => {
+    const employeeList = [];
+    results.forEach(({ first_name, last_name, id }) => {
+      employeeList.push({
+        name: first_name + " " + last_name,
+        value: id
+      });
+    });
+    db.query(`SELECT  * FROM role`, (err, roleResults) => {
+      err ? console.error(err) : console.table(results);
+      const roleList = [];
+      roleResults.forEach(({ title, id }) => {
+        roleList.push({
+          name: title,
+          value: id
+        });
+      });
+      inquirer.prompt(
+        [
+          {
+            name: "employeeSelect",
+            message: "Please Select the Employee You Wish to Update.",
+            choices: employeeList,
+            type: "list"
+          },
+          {
+            name: "roleSelect",
+            message: "Please Select the New Role for this Employee.",
+            choices: roleList,
+            type: "list"
+          }
+        ]
+      )
+      .then(function(data) {
+        db.query(`UPDATE employee SET ? WHERE ? = ?`, [{role_id: data.roleSelect}, "id", data.id], 
+        err ? console.error(err) : console.table(results));
+        promptCreator();
+      })      
+    })
+  })
+}
+
 promptCreator();
