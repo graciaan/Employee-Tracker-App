@@ -2,6 +2,7 @@ const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
 
+//creates connection to mysql database and sets it as a constant that can be used throughout the code
 const db = mysql.createConnection(
   {
     host: 'localhost',
@@ -11,6 +12,7 @@ const db = mysql.createConnection(
   }
 );
 
+//opening function that acts as the main menu for the user to navigate through
 function promptCreator(){
   inquirer.prompt(
     [
@@ -22,6 +24,7 @@ function promptCreator(){
       }
     ]
   )
+  //guides the menu as to which function to run based on user selection
   .then(function(data){
     if (`${data.employeeTracker}` === "View All Departments") {
       return viewDepartments();
@@ -43,6 +46,7 @@ function promptCreator(){
   });
 };
 
+//shows user the list of departments in the database
 function viewDepartments() {
   db.query(`SELECT * FROM department`, (err, results) => {
     err ? console.error(err) : console.table(results);
@@ -50,6 +54,7 @@ function viewDepartments() {
   });
 };
 
+//shows the user the list of roles in the database
 function viewRoles() {
   db.query(`SELECT * FROM role`, (err, results) => {
     err ? console.error(err) : console.table(results);
@@ -57,6 +62,7 @@ function viewRoles() {
   });
 };
 
+//shows the user the list of employees in the database
 function viewEmployees() {
   db.query(`SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT (manager.first_name, " ", manager.last_name) AS manager FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON employee.manager_id = manager.id`, (err, results) => {
     err ? console.error(err) : console.table(results);
@@ -64,6 +70,7 @@ function viewEmployees() {
   });
 };
 
+//function that allows the user to add a new department to the database. the id # will auto increment
 function addDepartment() {
   inquirer.prompt(
     [
@@ -80,6 +87,7 @@ function addDepartment() {
   });
 };
 
+//function that allows the user to add a new role to the database. the id # will auto increment
 function addRole() {
   inquirer.prompt(
     [
@@ -107,6 +115,7 @@ function addRole() {
   });
 };
 
+//function that allows the user to add a new employee to the database. id will auto increment
 function addEmployee() {
   inquirer.prompt(
     [
@@ -137,6 +146,7 @@ function addEmployee() {
   });
 };
 
+//function that allows the user to update the employees current role
 function updateEmployee() {
   db.query(`SELECT * FROM employee`, (err, results) => {
     const employeeList = [];
