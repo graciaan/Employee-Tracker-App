@@ -182,7 +182,7 @@ function updateEmployee() {
         ]
       )
       .then(function(data) {
-        db.query(`UPDATE employee SET ? WHERE ? = ?`, [{role_id: data.roleSelect}, "id", data.id], 
+        db.query(`UPDATE employee SET ? WHERE ?? = ?`, [{role_id: data.roleSelect}, "id", data.employeeSelect], 
         err ? console.error(err) : console.table(results));
         promptCreator();
       })      
