@@ -10,3 +10,4 @@ The application must first have the database created and seated and have the MyS
 
 It can be accessed through the terminal and starts with the "npm start" command.
 
+[Here is a link to a video that shows how to create the database, seed it, and run the application!](https://drive.google.com/file/d/1XPxH1LtY70htfWhkFvNL8DrGHm6gRSMR/view)
